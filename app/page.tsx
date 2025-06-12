@@ -1,103 +1,119 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import { useState } from "react"
+import type { FilterType } from "@/types/linkedin"
+import { FilterSearch } from "@/components/FilterSearch"
+import { SelectedFilters } from "@/components/SelectedFilters"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Users, Building2, MapPin, Briefcase, Filter } from "lucide-react"
+import { FilterOption } from "@/types/filters"
+import { filterConfigs } from "@/constants"
+
+export default function HomePage() {
+  const [filters, setFilters] = useState<Record<FilterType, FilterOption[]>>({
+    "job-title": [],
+    company: [],
+    location: [],
+    experience: [],
+  })
+
+  const addFilter = (type: FilterType, filter: FilterOption) => {
+    setFilters((prev) => ({
+      ...prev,
+      [type]: [...prev[type], filter],
+    }))
+  }
+
+  const removeFilter = (type: FilterType, id: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      [type]: prev[type].filter((f) => f.id !== id),
+    }))
+  }
+
+  const getTotalFilters = () => {
+    return Object.values(filters).reduce((total, filterList) => total + filterList.length, 0)
+  }
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        {/* Header Section */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl mb-6 shadow-lg">
+            <Filter className="w-8 h-8 text-white" />
+          </div>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-purple-800 bg-clip-text text-transparent mb-4">
+            AI Recruitment Filter Builder
+          </h1>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Build sophisticated candidate filters with intelligent search and precise targeting capabilities
+          </p>
+          {getTotalFilters() > 0 && (
+            <div className="mt-4">
+              <Badge variant="secondary" className="text-sm px-4 py-2">
+                {getTotalFilters()} {getTotalFilters() === 1 ? "Filter" : "Filters"} Active
+              </Badge>
+            </div>
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        {/* Filter Grid */}
+        <div className="grid lg:grid-cols-2 gap-8 mb-12">
+          {filterConfigs.map((config) => {
+            const Icon = config.icon
+            return (
+              <Card
+                key={config.type}
+                className="group hover:shadow-2xl transition-all duration-300 border-0 shadow-lg bg-white/80 backdrop-blur-sm"
+              >
+                <CardHeader className="pb-4">
+                  <div className="flex items-center space-x-4">
+                    <div
+                      className={`w-12 h-12 rounded-xl bg-gradient-to-r ${config.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                    >
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <CardTitle className="text-xl font-semibold text-gray-900">{config.title}</CardTitle>
+                      <CardDescription className="text-gray-600 mt-1">{config.description}</CardDescription>
+                    </div>
+                    {filters[config.type].length > 0 && (
+                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                        {filters[config.type].length}
+                      </Badge>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <FilterSearch type={config.type} onSelect={(f) => addFilter(config.type, f)} />
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
+
+        {/* Selected Filters Section */}
+        <Card className="shadow-xl border-0 bg-white/90 backdrop-blur-sm">
+          <CardHeader>
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center">
+                <Filter className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <CardTitle className="text-2xl font-semibold text-gray-900">Active Filters</CardTitle>
+                <CardDescription className="text-gray-600">
+                  Review and manage your selected recruitment criteria
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <SelectedFilters filters={filters} onRemove={removeFilter} />
+          </CardContent>
+        </Card>
+      </div>
     </div>
-  );
+  )
 }
