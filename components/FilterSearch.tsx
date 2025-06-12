@@ -74,7 +74,7 @@ export const FilterSearch: React.FC<FilterSearchProps> = ({ type, onSelect }) =>
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={`Search ${type.replace("-", " ")}...`}
-            className="pl-10 h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500 bg-gray-50/50 transition-all duration-200"
+            className="pl-10 h-12 border-gray-200 focus:border-blue-500 focus:ring-blue-500 bg-gray-950/50 transition-all duration-200"
           />
         </div>
       )}
@@ -94,7 +94,7 @@ export const FilterSearch: React.FC<FilterSearchProps> = ({ type, onSelect }) =>
       )}
 
       {!loading && !error && suggestions.length > 0 && (
-        <ScrollArea className="h-64 rounded-lg border border-gray-200 bg-white">
+        <ScrollArea className="h-64 rounded-lg border border-gray-200 bg-gray-900/80">
           <div className="p-2 space-y-1">
             {suggestions.map((item: any) => {
               const id = item.id || item.urn_id || item.text
@@ -103,10 +103,10 @@ export const FilterSearch: React.FC<FilterSearchProps> = ({ type, onSelect }) =>
               return (
                 <div
                   key={id}
-                  className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors duration-150 group"
+                  className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-700 transition-colors duration-150 group"
                 >
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">{name}</p>
+                    <p className="text-sm font-medium text-gray-200 truncate">{name}</p>
                   </div>
                   <div className="flex space-x-2 ml-4">
                     <Button

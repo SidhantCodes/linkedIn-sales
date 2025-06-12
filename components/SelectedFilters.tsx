@@ -15,13 +15,13 @@ export const SelectedFilters: React.FC<SelectedFiltersProps> = ({ filters, onRem
 
   if (!hasFilters) {
     return (
-      <Card className="border-dashed border-2 border-gray-200 bg-gray-50/50">
+      <Card className="border-dashed border-2 border-gray-200 bg-gray-600/50">
         <CardContent className="flex flex-col items-center justify-center py-12">
           <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-            <Briefcase className="w-8 h-8 text-gray-400" />
+            <Briefcase className="w-8 h-8 text-gray-700" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">No filters selected</h3>
-          <p className="text-gray-600 text-center max-w-md">
+          <h3 className="text-lg font-semibold text-gray-300 mb-2">No filters selected</h3>
+          <p className="text-gray-400 text-center max-w-md">
             Start building your recruitment criteria by selecting filters from the categories above.
           </p>
         </CardContent>
